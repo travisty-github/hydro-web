@@ -29,4 +29,22 @@ router.get('/levels/:name', function(req, res) {
   res.json(levels);
 });
 
+/* GET all information about a lake */
+router.get('/:name', function(req, res) {
+  var lake = null;
+  try {
+    lake = lakeLevels.getLake(req.params.name);
+  } catch(err) {
+    console.log('Error getting lake.');
+    console.log(err);
+    res.redirect(500, '/');
+    return;
+  }
+
+  // If null is returned no matches were found.
+  if (lake === null) res.redirect(404, '/');
+
+  res.json(lake);
+});
+
 module.exports = router;
