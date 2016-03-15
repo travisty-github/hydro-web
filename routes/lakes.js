@@ -9,7 +9,7 @@ var lakeLevels = new LakeLevels('./lakedata.json');
 /* GET lakes listing. */
 router.get('/', function(req, res) {
   res.json(lakeLevels.lakes());
-} );
+});
 
 /* GET lake historical levels. */
 router.get('/levels/:name', function(req, res) {
@@ -27,6 +27,6 @@ router.get('/levels/:name', function(req, res) {
   if (levels === null) res.redirect(404, '/');
 
   res.json(levels);
-} );
+});
 
 module.exports = router;
