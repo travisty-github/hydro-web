@@ -6,9 +6,9 @@ plotArea.xRange= [0, width - margin.left - margin.right];
 plotArea.yRange= [height - margin.top - margin.bottom, 0];
 // Load data
 var data = [];
-d3.json("/api/lakes/levels/Lake%20St.%20Clair%20%2F%20Lake%20King%20William", function(err, d) {
+d3.json("/api/lakes/Lake%20St.%20Clair%20%2F%20Lake%20King%20William", function(err, jsonData) {
   if (err) console.log(err);
-  data = d;
+  data = jsonData.historicalLevels;
 
   var xScale = d3.time.scale();
   var yScale = d3.scale.linear();
@@ -18,9 +18,7 @@ d3.json("/api/lakes/levels/Lake%20St.%20Clair%20%2F%20Lake%20King%20William", fu
     return d.date;
   }));
   yScale.range(plotArea.yRange);
-  yScale.domain([0, d3.max(data, function(d) {
-    return d.level;
-  })]);
+  yScale.domain([0, jsonData.capacity]);
 
   var xAxis = d3.svg.axis()
     .scale(xScale)
