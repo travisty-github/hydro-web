@@ -23,7 +23,7 @@ function LakeData(fileName) {
 }
 // Gets the lake object corresponding to lakeName. If not found null is returned.
 // Lake to be specified in encodedURI format.
-LakeData.prototype._getLake = function(lakeName) {
+LakeData.prototype.getLake = function(lakeName) {
   var decodedLakeName = decodeURIComponent(lakeName);
   console.log(decodedLakeName);
   var lake = this.data.filter(function(d) {
@@ -56,7 +56,7 @@ LakeData.prototype.lakes = function() {
 // Returns an array of the historical lake levels from an encoded URI of the
 // lake name
 LakeData.prototype.lakeLevels = function(lakeName) {
-  var lake = this._getLake(lakeName);
+  var lake = this.getLake(lakeName);
   return lake[0].historicalLevels;
 };
 
