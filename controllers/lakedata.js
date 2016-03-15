@@ -56,21 +56,7 @@ LakeData.prototype.lakes = function() {
 // Returns an array of the historical lake levels from an encoded URI of the
 // lake name
 LakeData.prototype.lakeLevels = function(lakeName) {
-  var decodedLakeName = decodeURIComponent(lakeName);
-  console.log(decodedLakeName);
-  var lake = this.data.filter(function(d) {
-    return decodedLakeName === d.name;
-  });
-
-  // Each lake name should be unique. If there are duplicates this is a problem.
-  if (lake.length > 1)
-    throw new Error('Duplicate lakes found.');
-
-  // If no matches found return null.
-  if (lake.length === 0) {
-    return null;
-  }
-
+  var lake = this._getLake(lakeName);
   return lake[0].historicalLevels;
 };
 
