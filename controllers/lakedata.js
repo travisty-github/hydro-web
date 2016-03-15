@@ -39,7 +39,7 @@ LakeData.prototype.getLake = function(lakeName) {
     return null;
   }
 
-  return lake;
+  return lake[0];
 };
 
 // Returns an array of objects containing all lake names and their corresponding
@@ -57,7 +57,7 @@ LakeData.prototype.lakes = function() {
 // lake name
 LakeData.prototype.lakeLevels = function(lakeName) {
   var lake = this.getLake(lakeName);
-  return lake[0].historicalLevels;
+  return lake.historicalLevels;
 };
 
 module.exports = LakeData;
