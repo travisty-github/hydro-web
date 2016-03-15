@@ -21,6 +21,26 @@ function LakeData(fileName) {
     throw new Error(err);
   }
 }
+// Gets the lake object corresponding to lakeName. If not found null is returned.
+// Lake to be specified in encodedURI format.
+LakeData.prototype._getLake = function(lakeName) {
+  var decodedLakeName = decodeURIComponent(lakeName);
+  console.log(decodedLakeName);
+  var lake = this.data.filter(function(d) {
+    return decodedLakeName === d.name;
+  });
+
+  // Each lake name should be unique. If there are duplicates this is a problem.
+  if (lake.length > 1)
+    throw new Error('Duplicate lakes found.');
+
+  // If no matches found return null.
+  if (lake.length === 0) {
+    return null;
+  }
+
+  return lake;
+};
 
 // Returns an array of objects containing all lake names and their corresponding
 // URI.
