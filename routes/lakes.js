@@ -11,6 +11,11 @@ router.get('/', function(req, res) {
   res.json(lakeLevels.lakes());
 });
 
+/* Get all current levels */
+router.get('/currentlevels', function(req, res) {
+  res.json(lakeLevels.currentLevels());
+});
+
 /* GET lake historical levels. */
 router.get('/levels/:name', function(req, res) {
   var levels = null;
@@ -34,7 +39,7 @@ router.get('/:name', function(req, res) {
   var lake = null;
   try {
     lake = lakeLevels.getLake(req.params.name);
-  } catch(err) {
+  } catch (err) {
     console.log('Error getting lake.');
     console.log(err);
     res.redirect(500, '/');
@@ -46,5 +51,6 @@ router.get('/:name', function(req, res) {
 
   res.json(lake);
 });
+
 
 module.exports = router;

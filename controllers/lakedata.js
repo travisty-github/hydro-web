@@ -25,7 +25,6 @@ function LakeData(fileName) {
 // Lake to be specified in encodedURI format.
 LakeData.prototype.getLake = function(lakeName) {
   var decodedLakeName = decodeURIComponent(lakeName);
-  console.log(decodedLakeName);
   var lake = this.data.filter(function(d) {
     return decodedLakeName === d.name;
   });
@@ -48,7 +47,8 @@ LakeData.prototype.lakes = function() {
   return this.data.map(function(d) {
     return {
       name: d.name,
-      uri: encodeURIComponent(d.name)
+      uri: encodeURIComponent(d.name),
+      capacity: d.capacity
     };
   });
 };
@@ -58,6 +58,18 @@ LakeData.prototype.lakes = function() {
 LakeData.prototype.lakeLevels = function(lakeName) {
   var lake = this.getLake(lakeName);
   return lake.historicalLevels;
+};
+
+// Returns an array of the current lake levels for all lakes. Assumes that the
+// historical levels are sorted in ascending order.
+LakeData.prototype.currentLevels = function() {
+  return this.data.map(function(d) {
+    return {
+      name: d.name,
+      capacity: d.capacity,
+      currentLevel: d.historicalLevels.slice(-1)[0].level
+    };
+  });
 };
 
 module.exports = LakeData;

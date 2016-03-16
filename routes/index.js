@@ -11,4 +11,9 @@ router.get('/graph', function(req, res) {
   res.render('graph.ejs');
 });
 
+/* GET treemap page. */
+router.get('/treemap', function(req, res) {
+  res.render('treemap.ejs');
+});
+
 module.exports = router;
