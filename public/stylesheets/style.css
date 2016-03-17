@@ -10,11 +10,11 @@ a {
 }
 
 .node {
-  /*margin: 10px;*/
   border: 1px black solid;
   overflow: hidden;
   position: absolute;
   background-color: white;
+  z-index: 1;
   transition: 0.5s;
 }
 
@@ -25,16 +25,18 @@ a {
 .internal-graph {
   width: 100%;
   background-color: #00B7FF;
+  transition: 0.5s;
 }
 
 div .lake-name {
   position: absolute;
   text-align: center;
   width: 100%;
+  transition: 0.5;
 }
 
 div .node:hover {
-  z-index: 5;
+  z-index: 100;
   border: 3px black solid;
 }
 
