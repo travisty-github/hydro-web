@@ -1,7 +1,4 @@
-// var width = 800;
-// var width = parseInt(d3.select('#chart').attr);
 var width = window.innerWidth - 200;
-console.log(width);
 var height = window.innerHeight * 0.8;
 // Load data
 var data = [];
@@ -30,11 +27,35 @@ d3.json('/api/lakes/currentlevels', function(err, d) {
     children: data
   };
 
-  redraw();
+  draw();
 
 });
 
 var redraw = function() {
+  width = window.innerWidth - 200;
+  height = window.innerHeight * 0.8;
+
+  d3.select('#chart')
+    .style('width', width + 'px')
+    .style('height', height + 'px');
+
+  treemap.size([width, height]);
+
+  nodes = d3.selectAll('.node')
+    .data(treemap.nodes)
+    .call(position)
+    .select('.lake-name')
+    .style('font-size', function(d) {
+      return fontSize(d.dx, d.dy);
+    });
+
+    d3.selectAll('.node')
+    .data(treemap.nodes)
+    .select('.internal-graph')
+    .call(internalGraph);
+};
+
+var draw = function() {
   treemap.size([width, height]);
 
   node = div.datum(data).selectAll('.node')
@@ -79,18 +100,7 @@ var redraw = function() {
     })
     .on('mouseout', function(d) {
       var e = d3.select(this);
-      e.style('width', function(d) {
-        return d.dx + 'px';
-      });
-      e.style('left', function(d) {
-        return d.x + 'px';
-      });
-      e.style('height', function(d) {
-        return d.dy + 'px';
-      });
-      e.style('top', function(d) {
-        return d.y + 'px';
-      });
+      e.call(position);
       e.classed('node-shadow', false);
       e.select('.lake-name').style('font-size', function(d) {
         return fontSize(d.dx, d.dy);
@@ -117,30 +127,34 @@ var redraw = function() {
 
   node.append('div')
     .attr('class', 'internal-graph')
+    .call(internalGraph);
+};
+
+function position() {
+  this.style('left', function(d) {
+      return d.x + 'px';
+    })
+    .style('top', function(d) {
+      return d.y + 'px';
+    })
+    .style('width', function(d) {
+      return Math.max(0, d.dx - 1) + 'px';
+    })
     .style('height', function(d) {
+      return Math.max(0, d.dy - 1) + 'px';
+    });
+}
+var fontSize = function(width, height) {
+  return Math.max(10, 0.12 * Math.sqrt(width * height)) + 'px';
+};
+
+function internalGraph() {
+  this.style('height', function(d) {
       return d.dy * (d.percentFull) + 'px';
     })
     .style('margin-top', function(d) {
       return d.dy * (1 - (d.percentFull)) + 'px';
     });
+}
 
-
-  function position() {
-    this.style('left', function(d) {
-        return d.x + 'px';
-      })
-      .style('top', function(d) {
-        return d.y + 'px';
-      })
-      .style('width', function(d) {
-        return Math.max(0, d.dx - 1) + 'px';
-      })
-      .style('height', function(d) {
-        return Math.max(0, d.dy - 1) + 'px';
-      });
-  }
-};
-
-var fontSize = function(width, height) {
-  return Math.max(10, 0.12 * Math.sqrt(width * height)) + 'px';
-};
+window.onresize = redraw;
