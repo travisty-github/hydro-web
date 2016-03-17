@@ -16,10 +16,14 @@ a {
   background-color: white;
   z-index: 1;
   transition: 0.5s;
+
 }
 
 #chart {
-  width: 100%;
+  text-align: center;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .internal-graph {
@@ -32,7 +36,7 @@ div .lake-name {
   position: absolute;
   text-align: center;
   width: 100%;
-  transition: 0.5;
+  transition: 3.5;
 }
 
 div .node:hover {

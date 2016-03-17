@@ -1,15 +1,8 @@
-var height = 800;
 // var width = 800;
-var width = parseInt(d3.select('#chart').attr);
-var margin = {
-  top: 20,
-  right: 20,
-  bottom: 30,
-  left: 50
-};
-var plotArea = {};
-plotArea.xRange = [0, width - margin.left - margin.right];
-plotArea.yRange = [height - margin.top - margin.bottom, 0];
+// var width = parseInt(d3.select('#chart').attr);
+var width = window.innerWidth - 200;
+console.log(width);
+var height = window.innerHeight * 0.8;
 // Load data
 var data = [];
 
@@ -21,11 +14,8 @@ var treemap = d3.layout.treemap()
   });
 
 var div = d3.select('#chart')
-  .style('position', 'relative')
-  .style('width', (width + margin.left + margin.right) + 'px')
-  .style('height', (height + margin.top + margin.bottom) + 'px')
-  .style('left', margin.left + 'px')
-  .style('top', margin.top + 'px');
+  .style('width', width + 'px')
+  .style('height', height + 'px');
 
 var node = null;
 
@@ -45,15 +35,13 @@ d3.json('/api/lakes/currentlevels', function(err, d) {
 });
 
 var redraw = function() {
-  width = window.innerWidth * 0.8;
-
   treemap.size([width, height]);
 
   node = div.datum(data).selectAll('.node')
     .data(treemap.nodes)
     .enter().append('div')
     .attr('class', function(d) {
-      /*** Add in additional data properties here. ***/
+      /*** Add in additional data properties. ***/
       d.percentFull = d.currentLevel / d.capacity;
       d.dxLarge = d.dx * 1.1 > 200 ? d.dx * 1.1 : 200;
       d.dyLarge = d.dy * 1.1 > 200 ? d.dy * 1.1 : 200;
