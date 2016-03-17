@@ -31,7 +31,7 @@ d3.json('/api/lakes/currentlevels', function(err, d) {
 
 });
 
-var redraw = function() {
+function redraw() {
   width = window.innerWidth - 200;
   height = window.innerHeight * 0.8;
 
@@ -53,9 +53,9 @@ var redraw = function() {
     .data(treemap.nodes)
     .select('.internal-graph')
     .call(internalGraph);
-};
+}
 
-var draw = function() {
+function draw() {
   treemap.size([width, height]);
 
   node = div.datum(data).selectAll('.node')
@@ -64,8 +64,6 @@ var draw = function() {
     .attr('class', function(d) {
       /*** Add in additional data properties. ***/
       d.percentFull = d.currentLevel / d.capacity;
-      d.dxLarge = d.dx * 1.1 > 200 ? d.dx * 1.1 : 200;
-      d.dyLarge = d.dy * 1.1 > 200 ? d.dy * 1.1 : 200;
       /***/
       return 'node';
     })
@@ -128,7 +126,7 @@ var draw = function() {
   node.append('div')
     .attr('class', 'internal-graph')
     .call(internalGraph);
-};
+}
 
 function position() {
   this.style('left', function(d) {
@@ -138,9 +136,13 @@ function position() {
       return d.y + 'px';
     })
     .style('width', function(d) {
+      // dxLarge is the zoomed height
+      d.dxLarge = d.dx * 1.1 > 200 ? d.dx * 1.1 : 200;
       return Math.max(0, d.dx - 1) + 'px';
     })
     .style('height', function(d) {
+      // dyLarge is the zoomed width
+      d.dyLarge = d.dy * 1.1 > 200 ? d.dy * 1.1 : 200;
       return Math.max(0, d.dy - 1) + 'px';
     });
 }
