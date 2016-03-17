@@ -2,6 +2,7 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   position: relative;
+  background-color: grey;
 }
 
 a {
@@ -13,7 +14,12 @@ a {
   border: 1px black solid;
   overflow: hidden;
   position: absolute;
-  /*box-shadow: 0px 0px 29px 13px rgba(0,0,0,0.31);*/
+  background-color: white;
+  transition: 0.5s;
+}
+
+#chart {
+  width: 100%;
 }
 
 .internal-graph {
@@ -25,4 +31,13 @@ div .lake-name {
   position: absolute;
   text-align: center;
   width: 100%;
+}
+
+div .node:hover {
+  z-index: 5;
+  border: 3px black solid;
+}
+
+.node-shadow {
+  box-shadow: 0px 0px 29px 5px rgba(0,0,0,0.31);
 }
