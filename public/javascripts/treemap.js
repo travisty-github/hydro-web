@@ -1,5 +1,8 @@
 var width = window.innerWidth - 200;
-var height = window.innerHeight * 0.7;
+var headerHeight = parseInt(d3.select('#header').style('height'));
+var padding = parseInt(d3.select('#background').style('padding-top'));
+padding += parseInt(d3.select('#background').style('padding-bottom'));
+var height = window.innerHeight - headerHeight - padding;
 // Load data
 var data = [];
 
@@ -33,7 +36,10 @@ d3.json('/api/lakes/currentlevels', function(err, d) {
 
 function redraw() {
   width = window.innerWidth - 200;
-  height = window.innerHeight * 0.7;
+  headerHeight = parseInt(d3.select('#header').style('height'));
+  padding = parseInt(d3.select('#background').style('padding-top'));
+  padding += parseInt(d3.select('#background').style('padding-bottom'));
+  height = window.innerHeight - headerHeight - padding;
 
   d3.select('#chart')
     .style('width', width + 'px')

@@ -2,19 +2,27 @@ body {
   /*padding: 50px;*/
   margin: 0px;
   font-family: 'Stint Ultra Expanded', sans-serif;
-  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
   position: relative;
 }
+
 a {
   color: #00B7FF;
 }
-h1 {
+
+#header {
+  height: 50px;
+}
+
+#title-text {
   font-weight: 400;
   font-size: 2em;
   float: left;
-  display: table-cell;
-  vertical-align: middle;
 }
+
+#links {
+  float: right;
+}
+
 .node {
   border: 1px black solid;
   overflow: hidden;
@@ -33,7 +41,6 @@ h1 {
 }
 .internal-graph {
   width: 100%;
-  /*background-color: #00B7FF;*/
   transition: 0.5s;
   transition-timing-function: ease-out;
   background: rgba(147, 206, 222, 1);
@@ -68,27 +75,14 @@ div .node:hover {
   background-color: #E9E9E9;
   padding-top: 50px;
   padding-bottom: 50px;
-  height: 100%;
   -webkit-box-shadow: inset 0px 8px 70px -25px rgba(0,0,0,0.75);
   -moz-box-shadow: inset 0px 8px 70px -25px rgba(0,0,0,0.75);
-  box-shadow: inset 0px 8px 70px -25px rgba(0,0,0,0.75);width: 100%;
+  box-shadow: inset 0px 8px 70px -25px rgba(0,0,0,0.75);
+  width: 100%;
 }
-#header {
-  height: 50px;
-  display: table;
-}
-#footer {
-  height: 50%;
-}
+
 .lake-text {
   display: table-cell;
   vertical-align: middle;
   transition: 0.5s;
-}
-
-.links {
-
-  float: right;
-  display: table-cell;
-  vertical-align: middle;
 }
