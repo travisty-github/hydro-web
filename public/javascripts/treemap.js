@@ -1,5 +1,5 @@
 var width = window.innerWidth - 200;
-var height = window.innerHeight * 0.8;
+var height = window.innerHeight * 0.7;
 // Load data
 var data = [];
 
@@ -33,7 +33,7 @@ d3.json('/api/lakes/currentlevels', function(err, d) {
 
 function redraw() {
   width = window.innerWidth - 200;
-  height = window.innerHeight * 0.8;
+  height = window.innerHeight * 0.7;
 
   d3.select('#chart')
     .style('width', width + 'px')
@@ -115,6 +115,7 @@ function draw() {
 
   node.append('div')
     .attr('class', 'lake-name')
+    .append('span')
     .html(function(d) {
       if (!d.hasOwnProperty('name')) return;
       return d.name + '<br/>' + Math.round(d.percentFull * 1000) / 10 + '%<br/>' + Math.round(d.currentLevel) + 'GWh';
@@ -147,7 +148,7 @@ function position() {
     });
 }
 var fontSize = function(width, height) {
-  return Math.max(10, 0.12 * Math.sqrt(width * height)) + 'px';
+  return Math.max(10, 0.1 * Math.sqrt(width * height)) + 'px';
 };
 
 function internalGraph() {
