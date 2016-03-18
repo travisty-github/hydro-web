@@ -45,7 +45,6 @@ div .lake-name {
   margin-bottom: auto;
   top: 0;
   bottom: 0;
-  border: 1px solid red;
   display: table;
 }
 
@@ -77,4 +76,5 @@ div .node:hover {
 span {
   display: table-cell;
   vertical-align: middle;
+  transition: 0.5s;
 }

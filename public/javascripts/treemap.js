@@ -44,7 +44,7 @@ function redraw() {
   nodes = d3.selectAll('.node')
     .data(treemap.nodes)
     .call(position)
-    .select('.lake-name')
+    .select('span')
     .style('font-size', function(d) {
       return fontSize(d.dx, d.dy);
     });
@@ -84,7 +84,7 @@ function draw() {
 
       e.classed('node-shadow', true);
 
-      e.select('.lake-name').style('font-size', function(d) {
+      e.select('span').style('font-size', function(d) {
         return fontSize(d.dxLarge, d.dyLarge);
       });
 
@@ -100,7 +100,7 @@ function draw() {
       var e = d3.select(this);
       e.call(position);
       e.classed('node-shadow', false);
-      e.select('.lake-name').style('font-size', function(d) {
+      e.select('span').style('font-size', function(d) {
         return fontSize(d.dx, d.dy);
       });
       e.select('.internal-graph')
