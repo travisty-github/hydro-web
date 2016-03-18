@@ -25,7 +25,7 @@ a {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  /*box-shadow: 0px 0px 29px 5px rgba(0,0,0,0.31);*/
+  box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.12);
 }
 
 .internal-graph {
@@ -58,7 +58,7 @@ div .node:hover {
 }
 
 #background {
-  background-color: #F2F2F2;
+  background-color: #E9E9E9;
   padding-top: 50px;
   padding-bottom: 50px;
   height: 100%;
