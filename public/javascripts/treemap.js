@@ -44,7 +44,7 @@ function redraw() {
   nodes = d3.selectAll('.node')
     .data(treemap.nodes)
     .call(position)
-    .select('span')
+    .select('.lake-text')
     .style('font-size', function(d) {
       return fontSize(d.dx, d.dy);
     });
@@ -84,7 +84,7 @@ function draw() {
 
       e.classed('node-shadow', true);
 
-      e.select('span').style('font-size', function(d) {
+      e.select('.lake-text').style('font-size', function(d) {
         return fontSize(d.dxLarge, d.dyLarge);
       });
 
@@ -100,7 +100,7 @@ function draw() {
       var e = d3.select(this);
       e.call(position);
       e.classed('node-shadow', false);
-      e.select('span').style('font-size', function(d) {
+      e.select('.lake-text').style('font-size', function(d) {
         return fontSize(d.dx, d.dy);
       });
       e.select('.internal-graph')
@@ -116,6 +116,7 @@ function draw() {
   node.append('div')
     .attr('class', 'lake-name')
     .append('span')
+    .attr('class', 'lake-text')
     .html(function(d) {
       if (!d.hasOwnProperty('name')) return;
       return d.name + '<br/>' + Math.round(d.percentFull * 1000) / 10 + '%<br/>' + Math.round(d.currentLevel) + 'GWh';

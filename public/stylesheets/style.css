@@ -80,15 +80,15 @@ div .node:hover {
 #footer {
   height: 50%;
 }
-span {
+.lake-text {
   display: table-cell;
   vertical-align: middle;
   transition: 0.5s;
 }
 
 .links {
+
   float: right;
   display: table-cell;
   vertical-align: middle;
-
 }
