@@ -5,10 +5,6 @@ body {
   position: relative;
 }
 
-a {
-  color: #00B7FF;
-}
-
 #header {
   height: 50px;
 }
@@ -17,10 +13,24 @@ a {
   font-weight: 400;
   font-size: 2em;
   float: left;
+  margin-left: 50px;
+  margin-top: 6px;
 }
 
 #links {
   float: right;
+  margin-right: 50px;
+  margin-top: 15px;
+}
+
+#links a {
+  color: black;
+  text-decoration: none;
+  padding-right: 20px;
+}
+
+#links a:hover {
+  color: #00B7FF;
 }
 
 .node {
