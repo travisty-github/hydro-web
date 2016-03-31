@@ -27,7 +27,6 @@ router.get('/levels/:name', function(req, res) {
 });
 
 /* GET all information about a lake */
-// TODO
 router.get('/:name', function(req, res) {
   var lake = null;
   try {
