@@ -104,7 +104,7 @@ LakeData.prototype.currentLevels = function(callback) {
           data.forEach(function(d) {
             currentLakeLevels.push({
               name: lakes[d._id].name,
-              level: d.level,
+              currentLevel: d.level,
               capacity: lakes[d._id].capacity
             });
           });
