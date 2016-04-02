@@ -49,7 +49,7 @@ LakeData.prototype.lakeLevels = function(lakeName, callback) {
           _id: 0,
           level: 1,
           date: 1
-        },
+        }).sort({ date: 1},
         function(err, data) {
           if (err) throw new Error(err);
           callback(data);
