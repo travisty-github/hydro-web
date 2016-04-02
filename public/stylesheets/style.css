@@ -96,3 +96,15 @@ div .node:hover {
   vertical-align: middle;
   transition: 0.5s;
 }
+
+#bigchart {
+  background: white;
+  z-index: 1000;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+}
+
+.lake-levels-area {
+  fill: rgba(147, 206, 222, 1);
+}

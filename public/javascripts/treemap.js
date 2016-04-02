@@ -55,7 +55,7 @@ function redraw() {
       return fontSize(d.dx, d.dy);
     });
 
-    d3.selectAll('.node')
+  d3.selectAll('.node')
     .data(treemap.nodes)
     .select('.internal-graph')
     .call(internalGraph);
@@ -117,6 +117,56 @@ function draw() {
           return d.dy * (1 - (d.percentFull)) + 1 + 'px';
         });
     })
+    .on('click', function(d) {
+      var width = div.style('width');
+      var height = div.style('height');
+
+      // Hide all nodes in the treemap chart
+      div.selectAll('.node')
+        .style('display', 'none');
+
+      // Show the line chart for selected lake
+      div.append('div')
+        .attr('id', 'bigchart')
+        .style('width', width)
+        .style('height', height);
+
+      d3.json('/api/lakes/levels/' + encodeURIComponent(d.name), function(err, data) {
+
+        var xScale = d3.time.scale()
+          .range([0, parseInt(width)])
+          .domain(d3.extent(data, function(d) {
+            return new Date(d.date);
+          }));
+
+        var yScale = d3.scale.linear()
+          .range([parseInt(height), 0])
+          .domain([0, d3.max(data, function(d) {
+            return d.level;
+          })]);
+
+        var svg = d3.select('#bigchart')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+
+        // var line = d3.svg.line()
+        // .x(function(d) { return xScale(new Date(d.date));})
+        // .y(function(d) { return yScale(d.level);});
+
+        var area = d3.svg.area()
+          .x(function(d) { console.log('                                   ',xScale(new Date(d.date))); return xScale(new Date(d.date)); })
+          .y0(parseInt(height))
+          .y1(function(d) {console.log(yScale(d.level)); return yScale(d.level); });
+
+        svg.append('path')
+          .datum(data)
+          .attr('class', 'lake-levels-area')
+          .attr('d', area);
+
+
+      });
+    })
     .call(position);
 
   node.append('div')
@@ -165,6 +215,10 @@ function internalGraph() {
     .style('margin-top', function(d) {
       return d.dy * (1 - (d.percentFull)) + 'px';
     });
+}
+
+function lineChart(element) {
+
 }
 
 window.onresize = redraw;
