@@ -150,21 +150,19 @@ function draw() {
           .attr('width', width)
           .attr('height', height);
 
-        // var line = d3.svg.line()
-        // .x(function(d) { return xScale(new Date(d.date));})
-        // .y(function(d) { return yScale(d.level);});
-
         var area = d3.svg.area()
-          .x(function(d) { console.log('                                   ',xScale(new Date(d.date))); return xScale(new Date(d.date)); })
+          .x(function(d) {
+            return xScale(new Date(d.date));
+          })
           .y0(parseInt(height))
-          .y1(function(d) {console.log(yScale(d.level)); return yScale(d.level); });
+          .y1(function(d) {
+            return yScale(d.level);
+          });
 
         svg.append('path')
           .datum(data)
           .attr('class', 'lake-levels-area')
           .attr('d', area);
-
-
       });
     })
     .call(position);
