@@ -191,6 +191,12 @@ function draw() {
           .style('text-anchor', 'end')
           .text('Dam level (%)');
 
+        svg.append('text')
+          .attr('transform', 'translate(' + chartWidth / 2 + ')')
+          .style('text-anchor', 'middle')
+          .attr('font-size', '1.5em')
+          .text(d.name);
+
       });
     })
     .call(position);
