@@ -148,7 +148,7 @@ function draw() {
         var svg = d3.select('#bigchart')
           .append('svg')
           .attr('width', width)
-          .attr('height', height)
+          .attr('height', height);
 
         // var line = d3.svg.line()
         // .x(function(d) { return xScale(new Date(d.date));})
