@@ -132,29 +132,42 @@ function draw() {
         .style('height', height);
 
       d3.json('/api/lakes/levels/' + encodeURIComponent(d.name), function(err, data) {
+        var margin = 50;
+        var chartWidth = parseInt(width) - 2 * margin;
+        var chartHeight = parseInt(height) - 2 * margin;
 
         var xScale = d3.time.scale()
-          .range([0, parseInt(width)])
+          .range([0, parseInt(chartWidth)])
           .domain(d3.extent(data, function(d) {
             return new Date(d.date);
           }));
 
         var yScale = d3.scale.linear()
-          .range([parseInt(height), 0])
+          .range([parseInt(chartHeight), 0])
           .domain([0, d3.max(data, function(d) {
             return d.level;
           })]);
 
+        var xAxis = d3.svg.axis()
+          .scale(xScale)
+          .orient('bottom');
+
+        var yAxis = d3.svg.axis()
+          .scale(yScale)
+          .orient('left');
+
         var svg = d3.select('#bigchart')
           .append('svg')
-          .attr('width', width)
-          .attr('height', height);
+          .attr('width', parseInt(width))
+          .attr('height', parseInt(height))
+          .append('g')
+          .attr('transform', 'translate('+ margin + ', ' + margin + ')');
 
         var area = d3.svg.area()
           .x(function(d) {
             return xScale(new Date(d.date));
           })
-          .y0(parseInt(height))
+          .y0(parseInt(chartHeight))
           .y1(function(d) {
             return yScale(d.level);
           });
@@ -163,6 +176,15 @@ function draw() {
           .datum(data)
           .attr('class', 'lake-levels-area')
           .attr('d', area);
+
+        svg.append('g')
+          .call(xAxis)
+          .attr('class', 'axis')
+          .attr('transform', 'translate(0, ' + chartHeight + ')');
+
+        svg.append('g')
+          .attr('class', 'axis')
+          .call(yAxis);
       });
     })
     .call(position);

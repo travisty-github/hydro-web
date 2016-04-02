@@ -108,3 +108,10 @@ div .node:hover {
 .lake-levels-area {
   fill: rgba(147, 206, 222, 1);
 }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
