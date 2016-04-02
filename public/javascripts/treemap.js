@@ -120,6 +120,7 @@ function draw() {
     .on('click', function(d) {
       var width = div.style('width');
       var height = div.style('height');
+      var capacity = d.capacity;
 
       // Hide all nodes in the treemap chart
       div.selectAll('.node')
@@ -144,9 +145,7 @@ function draw() {
 
         var yScale = d3.scale.linear()
           .range([parseInt(chartHeight), 0])
-          .domain([0, d3.max(data, function(d) {
-            return d.level;
-          })]);
+          .domain([0, 100]);
 
         var xAxis = d3.svg.axis()
           .scale(xScale)
@@ -169,7 +168,7 @@ function draw() {
           })
           .y0(parseInt(chartHeight))
           .y1(function(d) {
-            return yScale(d.level);
+            return yScale(d.level / capacity * 100);
           });
 
         svg.append('path')
@@ -184,7 +183,14 @@ function draw() {
 
         svg.append('g')
           .attr('class', 'axis')
-          .call(yAxis);
+          .call(yAxis)
+          .append('text')
+          .attr('transform', 'rotate(-90)')
+          .attr('y', 10)
+          .attr('dy', '0.7em')
+          .style('text-anchor', 'end')
+          .text('Dam level (%)');
+
       });
     })
     .call(position);
