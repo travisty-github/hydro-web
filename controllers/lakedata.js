@@ -44,12 +44,14 @@ LakeData.prototype.lakeLevels = function(lakeName, callback) {
       callback(data);
     } else {
       db.lakes.find({
-          lakeId: data[0]._id
-        }, {
-          _id: 0,
-          level: 1,
+        lakeId: data[0]._id
+      }, {
+        _id: 0,
+        level: 1,
+        date: 1
+      }).sort({
           date: 1
-        }).sort({ date: 1},
+        },
         function(err, data) {
           if (err) throw new Error(err);
           callback(data);
