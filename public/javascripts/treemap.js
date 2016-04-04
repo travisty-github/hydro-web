@@ -221,7 +221,12 @@ function draw() {
           .attr('transform', 'translate(' + (chartWidth - 50) + ', 0)')
           .style('text-anchor', 'right')
           .text('Close')
-          .on('click', function() { console.log('test');});
+          .on('click', function(d) {
+            div.selectAll('.node')
+              .style('display', 'inline');
+            div.select('#bigchart')
+            .remove();
+          });
 
       });
     })
