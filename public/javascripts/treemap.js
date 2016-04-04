@@ -212,10 +212,16 @@ function draw() {
           .text('Dam level (%)');
 
         svg.append('text')
-          .attr('transform', 'translate(' + chartWidth / 2 + ')')
+          .attr('transform', 'translate(' + chartWidth / 2 + ', 0)')
           .style('text-anchor', 'middle')
           .attr('font-size', '1.5em')
           .text(d.name);
+
+        svg.append('text')
+          .attr('transform', 'translate(' + (chartWidth - 50) + ', 0)')
+          .style('text-anchor', 'right')
+          .text('Close')
+          .on('click', function() { console.log('test');});
 
       });
     })
