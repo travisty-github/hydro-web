@@ -162,6 +162,26 @@ function draw() {
           .append('g')
           .attr('transform', 'translate('+ margin + ', ' + margin + ')');
 
+        var gradient = svg.append('defs')
+          .append('linearGradient')
+          .attr('id', 'blueGradient')
+          .attr('x1', '0')
+          .attr('x2', '0')
+          .attr('y1', '0')
+          .attr('y2', '1');
+
+        gradient.append('stop')
+          .attr('offset', '0%')
+          .attr('stop-color', 'rgba(147, 206, 222, 1)');
+
+        gradient.append('stop')
+          .attr('offset', '41%')
+          .attr('stop-color', 'rgba(117, 189, 209, 1)');
+
+        gradient.append('stop')
+          .attr('offset', '100%')
+          .attr('stop-color', 'rgba(73, 165, 191, 1)');
+
         var area = d3.svg.area()
           .x(function(d) {
             return xScale(new Date(d.date));

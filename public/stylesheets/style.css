@@ -106,7 +106,7 @@ div .node:hover {
 }
 
 .lake-levels-area {
-  fill: rgba(147, 206, 222, 1);
+  fill: url(#blueGradient);
 }
 
 .axis path,
