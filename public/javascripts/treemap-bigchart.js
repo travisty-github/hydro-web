@@ -1,5 +1,5 @@
-
-function BigChart(rootElement, name, capacity) {
+var BigChart = (function() {
+    function BigChart(rootElement, name, capacity) {
         this.rootElement = rootElement;
         this.name = name;
         this.capacity = capacity;
@@ -134,3 +134,7 @@ function BigChart(rootElement, name, capacity) {
         this.rootElement.select('#bigchart')
             .remove();
     };
+
+    return BigChart;
+
+}());
