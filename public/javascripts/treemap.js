@@ -1,4 +1,4 @@
-(function() {
+window.onresize = (function() {
     'use strict';
 
     var width = window.innerWidth - 200;
@@ -6,8 +6,6 @@
     var padding = parseInt(d3.select('#background').style('padding-top'));
     padding += parseInt(d3.select('#background').style('padding-bottom'));
     var height = window.innerHeight - headerHeight - padding;
-    // Load data
-    var data = [];
 
     var treemap = d3.layout.treemap()
         .size([width, height])
@@ -22,9 +20,12 @@
 
     var node = null;
 
+    // Load data
+    var data = [];
     d3.json('/api/lakes/currentlevels', function(err, d) {
         if (err) console.log(err);
 
+        // Do not need overall sytem storage level
         data = d.filter(function(d) {
             return d.name !== 'System';
         });
@@ -36,6 +37,7 @@
         draw();
 
     });
+
 
     function redraw() {
         width = window.innerWidth - 200;
@@ -50,7 +52,7 @@
 
         treemap.size([width, height]);
 
-        nodes = d3.selectAll('.node')
+        var nodes = d3.selectAll('.node')
             .data(treemap.nodes)
             .call(position)
             .select('.lake-text')
@@ -121,117 +123,19 @@
                     });
             })
             .on('click', function(d) {
-                var width = div.style('width');
-                var height = div.style('height');
-                var capacity = d.capacity;
-
-                // Hide all nodes in the treemap chart
-                div.selectAll('.node')
-                    .style('display', 'none');
-
-                // Show the line chart for selected lake
-                div.append('div')
-                    .attr('id', 'bigchart')
-                    .style('width', width)
-                    .style('height', height);
-
-                d3.json('/api/lakes/levels/' + encodeURIComponent(d.name), function(err, data) {
-                    var margin = 50;
-                    var chartWidth = parseInt(width) - 2 * margin;
-                    var chartHeight = parseInt(height) - 2 * margin;
-
-                    var xScale = d3.time.scale()
-                        .range([0, parseInt(chartWidth)])
-                        .domain(d3.extent(data, function(d) {
-                            return new Date(d.date);
-                        }));
-
-                    var yScale = d3.scale.linear()
-                        .range([parseInt(chartHeight), 0])
-                        .domain([0, 100]);
-
-                    var xAxis = d3.svg.axis()
-                        .scale(xScale)
-                        .orient('bottom');
-
-                    var yAxis = d3.svg.axis()
-                        .scale(yScale)
-                        .orient('left');
-
-                    var svg = d3.select('#bigchart')
-                        .append('svg')
-                        .attr('width', parseInt(width))
-                        .attr('height', parseInt(height))
-                        .append('g')
-                        .attr('transform', 'translate(' + margin + ', ' + margin + ')');
-
-                    var gradient = svg.append('defs')
-                        .append('linearGradient')
-                        .attr('id', 'blueGradient')
-                        .attr('x1', '0')
-                        .attr('x2', '0')
-                        .attr('y1', '0')
-                        .attr('y2', '1');
-
-                    gradient.append('stop')
-                        .attr('offset', '0%')
-                        .attr('stop-color', 'rgba(147, 206, 222, 1)');
-
-                    gradient.append('stop')
-                        .attr('offset', '41%')
-                        .attr('stop-color', 'rgba(117, 189, 209, 1)');
-
-                    gradient.append('stop')
-                        .attr('offset', '100%')
-                        .attr('stop-color', 'rgba(73, 165, 191, 1)');
-
-                    var area = d3.svg.area()
-                        .x(function(d) {
-                            return xScale(new Date(d.date));
-                        })
-                        .y0(parseInt(chartHeight))
-                        .y1(function(d) {
-                            return yScale(d.level / capacity * 100);
-                        });
-
-                    svg.append('path')
-                        .datum(data)
-                        .attr('class', 'lake-levels-area')
-                        .attr('d', area);
-
-                    svg.append('g')
-                        .call(xAxis)
-                        .attr('class', 'axis')
-                        .attr('transform', 'translate(0, ' + chartHeight + ')');
-
-                    svg.append('g')
-                        .attr('class', 'axis')
-                        .call(yAxis)
-                        .append('text')
-                        .attr('transform', 'rotate(-90)')
-                        .attr('y', 10)
-                        .attr('dy', '0.7em')
-                        .style('text-anchor', 'end')
-                        .text('Dam level (%)');
-
-                    svg.append('text')
-                        .attr('transform', 'translate(' + chartWidth / 2 + ', 0)')
-                        .style('text-anchor', 'middle')
-                        .attr('font-size', '1.5em')
-                        .text(d.name);
-
-                    svg.append('text')
-                        .attr('transform', 'translate(' + (chartWidth - 50) + ', 0)')
-                        .style('text-anchor', 'right')
-                        .text('Close')
-                        .on('click', function(d) {
-                            div.selectAll('.node')
-                                .style('display', 'inline');
-                            div.select('#bigchart')
-                                .remove();
-                        });
-
-                });
+                var bigChart = new BigChart(div, d.name, d.capacity);
+                bigChart.loadData(
+                    // Graph ready callback
+                    function() {
+                        // Hide all nodes in the treemap chart
+                        div.selectAll('.node')
+                            .style('display', 'none');
+                    },
+                    // Close callback
+                    function() {
+                        div.selectAll('.node')
+                            .style('display', 'inline');
+                    });
             })
             .call(position);
 
@@ -253,6 +157,7 @@
     }
 
     function position() {
+        /*jshint -W040*/
         this.style('left', function(d) {
                 return d.x + 'px';
             })
@@ -275,6 +180,7 @@
     };
 
     function internalGraph() {
+        /*jshint -W040*/
         this.style('height', function(d) {
                 return d.dy * (d.percentFull) + 'px';
             })
@@ -283,10 +189,6 @@
             });
     }
 
-    function lineChart(element) {
-
-    }
-
-    window.onresize = redraw;
+    return redraw;
 
 }());
