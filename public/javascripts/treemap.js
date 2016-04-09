@@ -1,59 +1,69 @@
-window.onresize = (function() {
+var TreeMap = (function() {
     'use strict';
 
-    var width = window.innerWidth - 200;
-    var headerHeight = parseInt(d3.select('#header').style('height'));
-    var padding = parseInt(d3.select('#background').style('padding-top'));
-    padding += parseInt(d3.select('#background').style('padding-bottom'));
-    var height = window.innerHeight - headerHeight - padding;
+    function TreeMap() {
+        this.width = window.innerWidth - 200;
+        this.headerHeight = parseInt(d3.select('#header').style('height'));
+        this.padding = parseInt(d3.select('#background').style('padding-top'));
+        this.padding += parseInt(d3.select('#background').style('padding-bottom'));
+        this.height = window.innerHeight - this.headerHeight - this.padding;
 
-    var treemap = d3.layout.treemap()
-        .size([width, height])
-        .sticky(true)
-        .value(function(d) {
-            return d.capacity;
+        this.treemap = d3.layout.treemap()
+            .size([this.width, this.height])
+            .sticky(true)
+            .value(function(d) {
+                return d.capacity;
+            });
+
+        this.div = d3.select('#chart')
+            .style('width', this.width + 'px')
+            .style('height', this.height + 'px');
+
+        this.node = null;
+
+        var self = this;
+        d3.select(window).on('resize', function() {
+            self.redraw.apply(self);
         });
+    }
 
-    var div = d3.select('#chart')
-        .style('width', width + 'px')
-        .style('height', height + 'px');
+    TreeMap.prototype.load = function(path) {
+        // Load data
+        this.data = [];
+        var self = this;
+        d3.json(path, function(err, d) {
+            if (err) console.log(err);
 
-    var node = null;
+            // Do not need overall sytem storage level
+            self.data = d.filter(function(d) {
+                return d.name !== 'System';
+            });
 
-    // Load data
-    var data = [];
-    d3.json('/api/lakes/currentlevels', function(err, d) {
-        if (err) console.log(err);
+            self.data = {
+                children: self.data
+            };
 
-        // Do not need overall sytem storage level
-        data = d.filter(function(d) {
-            return d.name !== 'System';
+            self._draw();
+
         });
-
-        data = {
-            children: data
-        };
-
-        draw();
-
-    });
+    };
 
 
-    function redraw() {
-        width = window.innerWidth - 200;
-        headerHeight = parseInt(d3.select('#header').style('height'));
-        padding = parseInt(d3.select('#background').style('padding-top'));
-        padding += parseInt(d3.select('#background').style('padding-bottom'));
-        height = window.innerHeight - headerHeight - padding;
+    TreeMap.prototype.redraw = function() {
+        this.width = window.innerWidth - 200;
+        this.headerHeight = parseInt(d3.select('#header').style('height'));
+        this.padding = parseInt(d3.select('#background').style('padding-top'));
+        this.padding += parseInt(d3.select('#background').style('padding-bottom'));
+        this.height = window.innerHeight - this.headerHeight - this.padding;
 
         d3.select('#chart')
-            .style('width', width + 'px')
-            .style('height', height + 'px');
+            .style('width', this.width + 'px')
+            .style('height', this.height + 'px');
 
-        treemap.size([width, height]);
+        this.treemap.size([this.width, this.height]);
 
         var nodes = d3.selectAll('.node')
-            .data(treemap.nodes)
+            .data(this.treemap.nodes)
             .call(position)
             .select('.lake-text')
             .style('font-size', function(d) {
@@ -61,16 +71,17 @@ window.onresize = (function() {
             });
 
         d3.selectAll('.node')
-            .data(treemap.nodes)
+            .data(this.treemap.nodes)
             .select('.internal-graph')
             .call(internalGraph);
-    }
+    };
 
-    function draw() {
-        treemap.size([width, height]);
+    TreeMap.prototype._draw = function() {
+        var self = this;
+        this.treemap.size([this.width, this.height]);
 
-        node = div.datum(data).selectAll('.node')
-            .data(treemap.nodes)
+        this.node = this.div.datum(this.data).selectAll('.node')
+            .data(this.treemap.nodes)
             .enter().append('div')
             .attr('class', function(d) {
                 /*** Add in additional data properties. ***/
@@ -123,23 +134,23 @@ window.onresize = (function() {
                     });
             })
             .on('click', function(d) {
-                var bigChart = new BigChart(div, d.name, d.capacity);
+                var bigChart = new BigChart(self.div, d.name, d.capacity);
                 bigChart.loadData(
                     // Graph ready callback
                     function() {
                         // Hide all nodes in the treemap chart
-                        div.selectAll('.node')
+                        self.div.selectAll('.node')
                             .style('display', 'none');
                     },
                     // Close callback
                     function() {
-                        div.selectAll('.node')
+                        self.div.selectAll('.node')
                             .style('display', 'inline');
                     });
             })
             .call(position);
 
-        node.append('div')
+        this.node.append('div')
             .attr('class', 'lake-name')
             .append('span')
             .attr('class', 'lake-text')
@@ -151,12 +162,12 @@ window.onresize = (function() {
                 return fontSize(d.dx, d.dy);
             });
 
-        node.append('div')
+        this.node.append('div')
             .attr('class', 'internal-graph')
             .call(internalGraph);
-    }
+    };
 
-    function position() {
+    var position = function() {
         /*jshint -W040*/
         this.style('left', function(d) {
                 return d.x + 'px';
@@ -174,12 +185,13 @@ window.onresize = (function() {
                 d.dyLarge = d.dy * 1.1 > 200 ? d.dy * 1.1 : 200;
                 return Math.max(0, d.dy - 1) + 'px';
             });
-    }
+    };
+
     var fontSize = function(width, height) {
         return Math.max(10, 0.1 * Math.sqrt(width * height)) + 'px';
     };
 
-    function internalGraph() {
+    var internalGraph = function() {
         /*jshint -W040*/
         this.style('height', function(d) {
                 return d.dy * (d.percentFull) + 'px';
@@ -187,8 +199,9 @@ window.onresize = (function() {
             .style('margin-top', function(d) {
                 return d.dy * (1 - (d.percentFull)) + 'px';
             });
-    }
+    };
 
-    return redraw;
+
+    return TreeMap;
 
 }());

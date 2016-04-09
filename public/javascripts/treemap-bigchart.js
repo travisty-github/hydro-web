@@ -1,4 +1,5 @@
 var BigChart = (function() {
+  'use strict';
     function BigChart(rootElement, name, capacity) {
         this.rootElement = rootElement;
         this.name = name;
