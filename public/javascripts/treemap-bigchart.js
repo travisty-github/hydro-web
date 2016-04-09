@@ -120,6 +120,7 @@ var BigChart = (function() {
         svg.append('text')
             .attr('transform', 'translate(' + (chartWidth - 50) + ', 0)')
             .style('text-anchor', 'right')
+            .style('cursor', 'pointer')
             .text('Close')
             .on('click', function(d) {
                 // self.rootElement.selectAll('.node')
