@@ -2,6 +2,8 @@ var TreeMap = (function() {
     'use strict';
 
     function TreeMap() {
+      this.bigChart = null;
+
         this.width = window.innerWidth - 200;
         this.headerHeight = parseInt(d3.select('#header').style('height'));
         this.padding = parseInt(d3.select('#background').style('padding-top'));
@@ -74,6 +76,8 @@ var TreeMap = (function() {
             .data(this.treemap.nodes)
             .select('.internal-graph')
             .call(internalGraph);
+
+        if (this.bigChart) this.bigChart.redraw(this.width, this.height);
     };
 
     TreeMap.prototype._draw = function() {
@@ -134,8 +138,8 @@ var TreeMap = (function() {
                     });
             })
             .on('click', function(d) {
-                var bigChart = new BigChart(self.div, d.name, d.capacity);
-                bigChart.loadData(
+                self.bigChart = new BigChart(self.div, d.name, d.capacity);
+                self.bigChart.loadData(
                     // Graph ready callback
                     function() {
                         // Hide all nodes in the treemap chart
@@ -146,6 +150,7 @@ var TreeMap = (function() {
                     function() {
                         self.div.selectAll('.node')
                             .style('display', 'inline');
+                        self.bigChart = null;
                     });
             })
             .call(position);

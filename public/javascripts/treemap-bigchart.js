@@ -20,14 +20,21 @@ var BigChart = (function() {
 
     BigChart.prototype.createChart = function() {
         var self = this;
-        var width = this.rootElement.style('width');
-        var height = this.rootElement.style('height');
+        // Check the number of arguments are ok. Either zero or two.
+        if (arguments.length !== 0 && arguments.length !== 2)
+        {
+          throw new Error("Invalid number of arguments. Expected zero or two.");
+        }
 
-        // // Hide all nodes in the treemap chart
-        // this.rootElement.selectAll('.node')
-        //     .style('display', 'none');
+        var width = 0, height = 0;
+        if (arguments.length === 0) {
+          width = this.rootElement.style('width');
+          height = this.rootElement.style('height');
+        } else {
+          width = arguments[0];
+          height = arguments[1];
+        }
 
-        // Show the line chart for selected lake
         this.rootElement.append('div')
             .attr('id', 'bigchart')
             .style('width', width)
@@ -123,8 +130,6 @@ var BigChart = (function() {
             .style('cursor', 'pointer')
             .text('Close')
             .on('click', function(d) {
-                // self.rootElement.selectAll('.node')
-                //     .style('display', 'inline');
                 self.rootElement.select('#bigchart')
                     .remove();
                 self.callbackClose();
@@ -135,6 +140,17 @@ var BigChart = (function() {
     BigChart.prototype.removeChart = function() {
         this.rootElement.select('#bigchart')
             .remove();
+    };
+
+    BigChart.prototype.redraw = function(targetWidth, targetHeight) {
+      // Redraws the chart by removing it and creating a new one.
+      // Note that we cannot just read the width and height sytle properties
+      // as they are changing due to CSS transforms. We must pass the final
+      // values to the drawing function manually. Unfortunately we don't get
+      // a nice animation this way....
+
+      this.removeChart();
+      this.createChart(targetWidth, targetHeight);
     };
 
     return BigChart;
