@@ -193,7 +193,7 @@ var TreeMap = (function() {
     };
 
     var fontSize = function(width, height) {
-        return Math.max(10, 0.1 * Math.sqrt(width * height)) + 'px';
+        return Math.max(14, 0.06 * Math.sqrt(width * height)) + 'px';
     };
 
     var internalGraph = function() {
