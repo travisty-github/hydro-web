@@ -105,6 +105,7 @@ div .node:hover {
   position: absolute;
   left: 0px;
   right: 0px;
+  overflow: hidden;
 }
 
 .lake-levels-area {
