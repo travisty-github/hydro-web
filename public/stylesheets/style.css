@@ -3,11 +3,9 @@ body {
   font-family: sans-serif;
   position: relative;
 }
-
 #header {
   height: 50px;
 }
-
 #title-text {
   font-weight: 400;
   font-size: 2em;
@@ -15,23 +13,19 @@ body {
   margin-left: 50px;
   margin-top: 6px;
 }
-
 #links {
   float: right;
   margin-right: 50px;
   margin-top: 15px;
 }
-
 #links a {
   color: black;
   text-decoration: none;
   padding-right: 20px;
 }
-
 #links a:hover {
   color: #00B7FF;
 }
-
 .node {
   border: 1px black solid;
   overflow: hidden;
@@ -87,34 +81,38 @@ div .node:hover {
   background-color: #E9E9E9;
   padding-top: 50px;
   padding-bottom: 50px;
-  -webkit-box-shadow: inset 0px 8px 70px -25px rgba(0,0,0,0.75);
-  -moz-box-shadow: inset 0px 8px 70px -25px rgba(0,0,0,0.75);
-  box-shadow: inset 0px 8px 70px -25px rgba(0,0,0,0.75);
+  -webkit-box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
   width: 100%;
 }
-
 .lake-text {
   display: table-cell;
   vertical-align: middle;
   transition: 0.5s;
 }
-
 #bigchart {
   background: white;
-  z-index: 1000;
+  z-index: 1;
   position: absolute;
   left: 0px;
   right: 0px;
   overflow: hidden;
+  transition: 0.5s;
 }
-
 .lake-levels-area {
   fill: url(#blueGradient);
 }
-
-.axis path,
-.axis line {
+.axis path, .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.visible {
+  opacity: 1;
+  visibility: visible;
 }

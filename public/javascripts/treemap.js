@@ -138,18 +138,25 @@ var TreeMap = (function() {
                     });
             })
             .on('click', function(d) {
+                // Disable clicking any other nodes
+                self.div.selectAll('.node')
+                  .style('pointer-events', 'none');
+
                 self.bigChart = new BigChart(self.div, d.name, d.capacity);
                 self.bigChart.loadData(
                     // Graph ready callback
                     function() {
                         // Hide all nodes in the treemap chart
                         self.div.selectAll('.node')
-                            .style('display', 'none');
+                          .classed('visible', false)
+                          .classed('hidden', true);
                     },
                     // Close callback
                     function() {
                         self.div.selectAll('.node')
-                            .style('display', 'inline');
+                          .classed('hidden', false)
+                          .classed('visible', true)
+                          .style('pointer-events', 'auto');
                         self.bigChart = null;
                     });
             })
