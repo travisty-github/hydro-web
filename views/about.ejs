@@ -7,11 +7,53 @@
 
 <body>
     <% include partials/navbar.ejs %>
-    <div id="background">
-      <div>
-        About...
-      </div>
-    </div>
+        <div id="background">
+            <div id="about">
+                <h1>About</h1>
+                <h2>Source Data</h2>
+                <p>
+                    All data is souced from the <a href="http://www.hydro.com.au/water/energy-data">Hydro Tasmania website</a>.
+                </p>
+                <h2>The Main Chart</h2>
+                <!-- TODO: Image of chart -->
+                <p>
+                    The chart illustrates the following characteristic of each lake in the Hydro Tasmania system. Clicking on a lake will show the historical levels chart for that lake.
+                    <ul>
+                        <li>
+                            <h3>Relative Size</h3>
+                            <p>
+                                The size of the box for each lake indicates its relative size. The larger the box, the larger the lake.
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Current Lake Level</h3>
+                            <p>
+                                The current level of the lake is indicated by two methods:
+                                <ol>
+                                    <li>
+                                      A percentage value of maximum capacity.
+                                    </li>
+                                    <li>
+                                        A blue fill which visually indicates the percentage value of
+                                        maximum capacity. The higher the fill, the higer the level.
+                                    </li>
+                                </ol>
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Remaining Energy</h3>
+                            <p>
+                                The amount of energy stored in the lake measured in Gigawatt hours (GWh).
+                            </p>
+                        </li>
+                    </ul>
+                </p>
+                <h2>Historical Levels Chart</h2>
+                <p>
+                    This chart illustrates the lake level over time as a percentage of maximum capcity.
+                </p>
+            </div>
+        </div>
 </body>
 
 </html>
