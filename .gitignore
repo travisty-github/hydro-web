@@ -31,3 +31,6 @@ npm-debug.log
 
 # Ignore data
 lakedata.json
+
+# Ignore dist folder
+public/dist/
