@@ -1,0 +1,118 @@
+body {
+  margin: 0px;
+  font-family: sans-serif;
+  position: relative;
+}
+#header {
+  height: 50px;
+}
+#title-text {
+  font-weight: 400;
+  font-size: 2em;
+  float: left;
+  margin-left: 50px;
+  margin-top: 6px;
+}
+#links {
+  float: right;
+  margin-right: 50px;
+  margin-top: 15px;
+}
+#links a {
+  color: black;
+  text-decoration: none;
+  padding-right: 20px;
+}
+#links a:hover {
+  color: #00B7FF;
+}
+.node {
+  border: 1px black solid;
+  overflow: hidden;
+  position: absolute;
+  background-color: white;
+  z-index: 1;
+  transition: 0.5s;
+  transition-timing-function: ease-out;
+  cursor: pointer;
+}
+#chart {
+  text-align: center;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.12);
+  transition: 0.5s;
+  transition-timing-function: ease-out;
+}
+.internal-graph {
+  width: 100%;
+  transition: 0.5s;
+  transition-timing-function: ease-out;
+  background: rgba(147, 206, 222, 1);
+  background: -moz-linear-gradient(top, rgba(147, 206, 222, 1) 0%, rgba(117, 189, 209, 1) 41%, rgba(73, 165, 191, 1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(147, 206, 222, 1)), color-stop(41%, rgba(117, 189, 209, 1)), color-stop(100%, rgba(73, 165, 191, 1)));
+  background: -webkit-linear-gradient(top, rgba(147, 206, 222, 1) 0%, rgba(117, 189, 209, 1) 41%, rgba(73, 165, 191, 1) 100%);
+  background: -o-linear-gradient(top, rgba(147, 206, 222, 1) 0%, rgba(117, 189, 209, 1) 41%, rgba(73, 165, 191, 1) 100%);
+  background: -ms-linear-gradient(top, rgba(147, 206, 222, 1) 0%, rgba(117, 189, 209, 1) 41%, rgba(73, 165, 191, 1) 100%);
+  background: linear-gradient(to bottom, rgba(147, 206, 222, 1) 0%, rgba(117, 189, 209, 1) 41%, rgba(73, 165, 191, 1) 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#49a5bf', GradientType=0);
+}
+div .lake-name {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  height: 50%;
+  min-height: 100px;
+  margin-top: auto;
+  margin-bottom: auto;
+  top: 0;
+  bottom: 0;
+  display: table;
+}
+div .node:hover {
+  z-index: 100;
+  border: 1px black solid;
+}
+.node-shadow {
+  box-shadow: 0px 0px 29px 5px rgba(0, 0, 0, 0.31);
+}
+#background {
+  background-color: #E9E9E9;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  -webkit-box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
+  width: 100%;
+}
+.lake-text {
+  display: table-cell;
+  vertical-align: middle;
+  transition: 0.5s;
+}
+#bigchart {
+  background: white;
+  z-index: 1;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  transition: 0.5s;
+}
+.lake-levels-area {
+  fill: url(#blueGradient);
+}
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.visible {
+  opacity: 1;
+  visibility: visible;
+}

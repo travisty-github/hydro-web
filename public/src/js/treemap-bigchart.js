@@ -1,5 +1,7 @@
-var BigChart = (function() {
+module.exports = (function() {
   'use strict';
+    // var d3 = require('d3');
+
     function BigChart(rootElement, name, capacity) {
         this.rootElement = rootElement;
         this.name = name;
