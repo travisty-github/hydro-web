@@ -16,5 +16,14 @@
     "mongojs": "^2.3.0",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.12.1",
+    "gulp": "^3.9.1",
+    "gulp-useref": "^3.0.8",
+    "through2": "^2.0.1",
+    "vinyl-transform": "^1.0.0",
+    "webpack": "^1.12.15",
+    "webpack-stream": "^3.1.0"
   }
 }

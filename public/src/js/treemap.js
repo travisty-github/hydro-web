@@ -1,5 +1,7 @@
-var TreeMap = (function() {
+module.exports = (function() {
     'use strict';
+
+    var BigChart = require('./treemap-bigchart');
 
     function TreeMap() {
       this.bigChart = null;
@@ -64,7 +66,7 @@ var TreeMap = (function() {
 
         this.treemap.size([this.width, this.height]);
 
-        var nodes = d3.selectAll('.node')
+        d3.selectAll('.node')
             .data(this.treemap.nodes)
             .call(position)
             .select('.lake-text')
