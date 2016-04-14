@@ -4,6 +4,8 @@ var webpack = require('webpack-stream');
 var webpackConfig = require('./webpack.config');
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
+var imagemin = require('gulp-imagemin');
+var cache = require('gulp-cache');
 
 gulp.task('browserSync', function() {
     browserSync.init({
@@ -26,6 +28,12 @@ gulp.task('css', function() {
     .pipe(gulp.dest('public/dist/stylesheets'));
 });
 
+gulp.task('images', function() {
+    return gulp.src('public/src/images/**/*.+(png|jpg)')
+    .pipe(cache(imagemin()))
+    .pipe(gulp.dest('public/dist/images'));
+});
+
 gulp.task('watch', ['browserSync'], function() {
     gulp.watch('views/**/*.ejs', browserSync.reload);
 
@@ -33,4 +41,5 @@ gulp.task('watch', ['browserSync'], function() {
     gulp.watch('public/dist/js/*.js', browserSync.reload);
 
     gulp.watch('public/src/stylesheets/**/*.css', ['css', browserSync.reload]);
+    gulp.watch('public/src/images/**', ['images', browserSync.reload]);
 });
