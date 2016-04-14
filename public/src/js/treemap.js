@@ -8,7 +8,6 @@ module.exports = (function() {
 
         this.width = window.innerWidth - 200;
         this.headerHeight = parseInt(d3.select('#navbar').style('height'));
-        console.log(this.headerHeight);
         this.padding = parseInt(d3.select('#background').style('padding-top'));
         this.padding += parseInt(d3.select('#background').style('padding-bottom'));
         this.height = window.innerHeight - this.headerHeight - this.padding;
