@@ -7,26 +7,27 @@
 
 <body>
     <% include partials/navbar.ejs %>
-        <div id="background">
-            <div id="about" class="container shadow">
-                <h1>About</h1>
-                <h2>Source Data</h2>
+        <div >
+            <div class="container ">
+                <h1>So how does this all work?</h1>
+                <h3>Source Data</h3>
                 <p>
                     All data is souced from the <a href="http://www.hydro.com.au/water/energy-data">Hydro Tasmania website</a>.
+                    It is updated every week on Monday.
                 </p>
-                <h2>The Main Chart</h2>
+                <h3>The Main Chart</h3>
                 <!-- TODO: Image of chart -->
                 <p>
                     The chart illustrates the following characteristic of each lake in the Hydro Tasmania system. Clicking on a lake will show the historical levels chart for that lake.
                     <ul>
                         <li>
-                            <h3>Relative Size</h3>
+                            <h4>Relative Size</h4>
                             <p>
                                 The size of the box for each lake indicates its relative size. The larger the box, the larger the lake.
                             </p>
                         </li>
                         <li>
-                            <h3>Current Lake Level</h3>
+                            <h4>Current Lake Level</h4>
                             <p>
                                 The current level of the lake is indicated by two methods:
                                 <ol>
@@ -41,14 +42,14 @@
                             </p>
                         </li>
                         <li>
-                            <h3>Remaining Energy</h3>
+                            <h4>Remaining Energy</h4>
                             <p>
                                 The amount of energy stored in the lake measured in Gigawatt hours (GWh).
                             </p>
                         </li>
                     </ul>
                 </p>
-                <h2>Historical Levels Chart</h2>
+                <h3>Historical Levels Chart</h3>
                 <p>
                     This chart illustrates the lake level over time as a percentage of maximum capcity.
                 </p>
