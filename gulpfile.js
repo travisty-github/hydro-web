@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 
 gulp.task('browserSync', function() {
     browserSync.init({
+        notify: false,
         proxy: 'localhost:3000',
         reloadDelay: 500
     });
