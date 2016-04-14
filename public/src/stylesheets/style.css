@@ -3,28 +3,8 @@ body {
   font-family: sans-serif;
   position: relative;
 }
-#header {
-  height: 50px;
-}
-#title-text {
-  font-weight: 400;
-  font-size: 2em;
-  float: left;
-  margin-left: 50px;
-  margin-top: 6px;
-}
-#links {
-  float: right;
-  margin-right: 50px;
-  margin-top: 15px;
-}
-#links a {
-  color: black;
-  text-decoration: none;
-  padding-right: 20px;
-}
-#links a:hover {
-  color: #00B7FF;
+#navbar {
+  margin-bottom: 0px;
 }
 .node {
   border: 1px black solid;
@@ -35,6 +15,8 @@ body {
   transition: 0.5s;
   transition-timing-function: ease-out;
   cursor: pointer;
+  margin: 0px;
+  box-sizing: content-box;
 }
 #chart {
   text-align: center;

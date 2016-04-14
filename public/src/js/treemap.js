@@ -7,7 +7,8 @@ module.exports = (function() {
       this.bigChart = null;
 
         this.width = window.innerWidth - 200;
-        this.headerHeight = parseInt(d3.select('#header').style('height'));
+        this.headerHeight = parseInt(d3.select('#navbar').style('height'));
+        console.log(this.headerHeight);
         this.padding = parseInt(d3.select('#background').style('padding-top'));
         this.padding += parseInt(d3.select('#background').style('padding-bottom'));
         this.height = window.innerHeight - this.headerHeight - this.padding;
@@ -55,7 +56,7 @@ module.exports = (function() {
 
     TreeMap.prototype.redraw = function() {
         this.width = window.innerWidth - 200;
-        this.headerHeight = parseInt(d3.select('#header').style('height'));
+        this.headerHeight = parseInt(d3.select('#navbar').style('height'));
         this.padding = parseInt(d3.select('#background').style('padding-top'));
         this.padding += parseInt(d3.select('#background').style('padding-bottom'));
         this.height = window.innerHeight - this.headerHeight - this.padding;
