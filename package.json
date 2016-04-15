@@ -13,6 +13,7 @@
     "debug": "~2.2.0",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
+    "konfig": "^0.2.1",
     "mongojs": "^2.3.0",
     "morgan": "~1.6.1",
     "nodemailer": "^2.3.2",

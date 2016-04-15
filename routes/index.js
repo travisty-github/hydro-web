@@ -47,6 +47,9 @@ router.post('/contact', function(req, res, next) {
       .send('Invalid email address.');
   }
   var query = validator.escape(req.body.query);
+
+  // Send email
+
   res.send('ok');
 });
 

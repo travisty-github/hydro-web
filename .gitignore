@@ -34,3 +34,6 @@ lakedata.json
 
 # Ignore dist folder
 public/dist/
+
+# Ignore configuration file (contains email login secrets)
+config/**
