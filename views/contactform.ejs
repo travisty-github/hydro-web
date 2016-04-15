@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+<head>
+    <% include partials/head.ejs %>
+</head>
+
+<body>
+    <% include partials/navbar.ejs %>
+        <div class="container">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <h2>Get in touch.</h2>
+                <p>
+                    Would you like to know more? Use the form below or find me on twitter at
+                    <a href="https://twitter.com/theeraoftravis">@theeraoftravis</a>.
+                </p>
+                <div class="well">
+                    <form method="post" action="" role="form">
+                      <div class="form-group">
+                        <label for="formemail" class="sr-only">Email address</label>
+                        <input type="email" id="formemail" name="email" class="form-control" placeholder="Email" required/>
+                      </div>
+                        <div class="form-group">
+                                <label for="formquerytext" class="sr-only">Question to ask</label>
+                                <textarea type="text" id="formquerytext" placeholder="Question away!" class="form-control" name="query" style="resize: vertical" rows="6" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success center-block">Send <span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>
