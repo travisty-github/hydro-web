@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+//TODO Change session.MemoryStore to production grade provider
+var sessionStore = new session.MemoryStore();
 global.config = require('konfig')();
 
 var routes = require('./routes/index');
@@ -18,6 +21,20 @@ app.set('view engine', 'ejs');
 
 app.use('/assets', express.static(__dirname + '/public/dist/'));
 
+app.use(session({
+    cookie: { maxAge: 60000 },
+    store: sessionStore,
+    saveUninitialized: true,
+    resave: 'true',
+    secret: config.app.session.secret
+}));
+
+app.use(function(req, res, next){
+    // if there's a flash message in the session request, make it available in the response, then delete it
+    res.locals.flash = req.session.flash;
+    delete req.session.flash;
+    next();
+});
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));

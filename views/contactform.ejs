@@ -9,6 +9,11 @@
     <% include partials/navbar.ejs %>
         <div class="container">
             <div class="col-md-8 col-md-offset-2 col-sm-12">
+              <% if (flash && flash.message) { %>
+                <div class="alert alert-<%= flash.type %>">
+                  <%= flash.message %>
+                </div>
+              <% } %>
                 <h2>Get in touch.</h2>
                 <p>
                     Would you like to know more? Use the form below or find me on twitter at

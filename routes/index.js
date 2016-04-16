@@ -5,85 +5,102 @@ var nodemailer = require('nodemailer');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+    res.render('index');
 });
 
 /* GET about page. */
 router.get('/about', function(req, res, next) {
-  res.render('about');
+    res.render('about');
 });
 
 /* GET contact form page. */
 router.get('/contact', function(req, res, next) {
-  res.render('contactform');
+    res.render('contactform');
 });
 
 /* POST contact form. */
 router.post('/contact', function(req, res, next) {
 
-  console.log(req.body.query, req.body.email);
-  // Check correct fields sent for request body
-  var requiredFields =  [
-    {
-      name: 'email',
-      errorMessage: 'Missing email address in request.'
-    },
-    {
-      name: 'query',
-      errorMessage: 'Missing query message in request.'
-    }
-  ];
+    // Check correct fields sent for request body
+    var requiredFields = [{
+        name: 'email',
+        errorMessage: 'No email adress provided.'
+    }, {
+        name: 'query',
+        errorMessage: 'No message provided.'
+    }];
 
-  requiredFields.forEach(function(field) {
-    if (! req.body[field.name]) {
-      res.status(400)
-        .send(field.errorMessage);
-    }
-  });
+    for (var i = 0; i < requiredFields.length; i++) {
+      if (!req.body[requiredFields[i].name]) {
 
-  // Validate email address
-  if (! validator.isEmail(req.body.email))
-  {
-    res.status(400)
-      .send('Invalid email address.');
-  }
+      req.session.flash = {
+        type: 'danger',
+        message: requiredFields[i].errorMessage
+      };
 
-  var fromAddress = req.body.email;
-  var query = validator.escape(req.body.query);
-
-  // Send email
-  var emailConfig = {
-    host: config.app.email.host,
-    port: config.app.email.port,
-    secure: config.app.email.secure,
-    auth: {
-      user: config.app.email.user,
-      pass: config.app.email.password
-    }
-  };
-
-  var email = {
-    from: config.app.email.user,
-    to: config.app.email.user,
-    subject: 'Tasmania Hydro Dam Levels Enquiry',
-    text: 'Email from: ' + fromAddress + '\n\n' + query
-  };
-
-  var transporter = nodemailer.createTransport(emailConfig);
-  transporter.sendMail(email, function(err, info) {
-    if(err) {
-      console.log(err);
-      res.status(500)
-        .send('Error sending email.');
-        return;
+        res.status(400)
+            .redirect('/contact');
+          return;
+      }
     }
 
-    console.log('Message sent: ' + info.response);
+    // Validate email address
+    if (!validator.isEmail(req.body.email)) {
+      req.session.flash = {
+        type: 'danger',
+        message: 'Invalid email address.'
+      };
 
-  });
+        res.status(400)
+            .redirect('/contact');
+            return;
+    }
+
+    var fromAddress = req.body.email;
+    var query = validator.escape(req.body.query);
+
+    // Send email
+    var emailConfig = {
+        host: config.app.email.host,
+        port: config.app.email.port,
+        secure: config.app.email.secure,
+        auth: {
+            user: config.app.email.user,
+            pass: config.app.email.password
+        }
+    };
+
+    var email = {
+        from: config.app.email.user,
+        to: config.app.email.user,
+        subject: 'Tasmania Hydro Dam Levels Enquiry',
+        text: 'Email from: ' + fromAddress + '\n\n' + query
+    };
+
+    var transporter = nodemailer.createTransport(emailConfig);
+    transporter.sendMail(email, function(err, info) {
+        if (err) {
+            console.log(err);
+            req.session.flash = {
+              type: 'danger',
+              message: 'Failed to send message: ' + err
+            };
+            res.status(500)
+              .redirect('/contact');
+              next();
+        }
+
+        console.log('Message sent: ' + info.response);
+
+    req.session.flash = {
+        type: 'success',
+        message: 'Message sent.'
+    };
+    res.status(301)
+        .redirect('/contact');
+    });
 
 
-  res.send('ok');
 });
 
 module.exports = router;
