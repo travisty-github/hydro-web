@@ -15,7 +15,11 @@ gulp.task('browserSync', function() {
     });
 });
 
-gulp.task('build', function() {
+// Build all assets.
+gulp.task('build', ['css', 'images']);
+
+// Not used as handled by 'webpack --watch' for caching purposes
+gulp.task('scripts', function() {
     return gulp.src(['public/src/js/*.js'])
         .pipe(webpack(webpackConfig))
         .pipe(gulp.dest('public/dist/js'));
