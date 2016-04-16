@@ -5,8 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-//TODO Change session.MemoryStore to production grade provider
-var sessionStore = new session.MemoryStore();
+var MongoStore = require('connect-mongo')(session);
+
 global.config = require('konfig')();
 
 var routes = require('./routes/index');
@@ -23,7 +23,9 @@ app.use('/assets', express.static(__dirname + '/public/dist/'));
 
 app.use(session({
     cookie: { maxAge: 60000 },
-    store: sessionStore,
+    store: new MongoStore({
+      url: 'mongodb://localhost:27017/hydro-web-sessions'
+    }),
     saveUninitialized: true,
     resave: 'true',
     secret: config.app.session.secret
