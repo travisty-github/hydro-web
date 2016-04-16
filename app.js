@@ -24,7 +24,7 @@ app.use('/assets', express.static(__dirname + '/public/dist/'));
 app.use(session({
     cookie: { maxAge: 60000 },
     store: new MongoStore({
-      url: 'mongodb://localhost:27017/hydro-web-sessions'
+      url: config.app.mongo_url + '/hydro-web-sessions'
     }),
     saveUninitialized: true,
     resave: 'true',

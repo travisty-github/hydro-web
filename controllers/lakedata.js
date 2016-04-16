@@ -1,6 +1,6 @@
 var fs = require('fs');
 var mongojs = require('mongojs');
-var db = mongojs('mongodb://localhost:27017/hydro-data', ['lakes']);
+var db = mongojs(config.app.mongo_url + '/hydro-data', ['lakes']);
 
 function LakeData(url) {}
 // Gets the lake object corresponding to lakeName. If not found null is returned.
