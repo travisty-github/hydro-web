@@ -1,0 +1,8 @@
+public/src/**
+.git
+.gitignore
+.jshintrc
+gulpfile.js
+nodemon.json
+webpack.config.js
+node_modules

@@ -15,6 +15,8 @@ var lakes = require('./routes/lakes');
 
 var app = express();
 
+// app.set('port', process.env.PORT || 3000);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
