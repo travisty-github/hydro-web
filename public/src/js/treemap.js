@@ -174,7 +174,7 @@ module.exports = (function() {
             .attr('class', 'lake-text')
             .html(function(d) {
                 if (!d.hasOwnProperty('name')) return;
-                return d.name + '<br/>' + Math.round(d.percentFull * 1000) / 10 + '%<br/>' + Math.round(d.currentLevel) + 'GWh';
+                return d.name + '<br/>' + Math.round(d.percentFull * 1000) / 10 + '% Full<br/>' + Math.round(d.currentLevel) + 'GWh of Energy Remaining';
             })
             .style('font-size', function(d) {
                 return fontSize(d.dx, d.dy);
