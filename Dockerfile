@@ -1,5 +1,5 @@
 FROM node:latest
-EXPOSE 8088 27017
+EXPOSE 8088
 ENV PORT=8088
 ENV NODE_ENV="production"
 RUN mkdir -p /usr/src/app
