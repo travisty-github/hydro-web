@@ -132,12 +132,19 @@ module.exports = (function() {
             .style('cursor', 'pointer')
             .text('Close')
             .on('click', function(d) {
-                self.rootElement.select('#bigchart')
-                    .remove();
-                self.callbackClose();
-            });
+              closeChart.call(self);
+                });
+
+        window.onhashchange = closeChart.bind(this);
 
     };
+
+    function closeChart() {
+      /* jshint -W040 */
+            this.rootElement.select('#bigchart')
+                    .remove();
+                this.callbackClose();
+    }
 
     BigChart.prototype.removeChart = function() {
         this.rootElement.select('#bigchart')

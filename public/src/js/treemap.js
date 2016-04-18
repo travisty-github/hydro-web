@@ -140,6 +140,10 @@ module.exports = (function() {
                     });
             })
             .on('click', function(d) {
+              // Set location with hash value. This is so we can detect
+              // the back button from BigChart if the user does not use
+              // the 'Close' text.
+              window.location.href = ("#historychart");
                 // Disable clicking any other nodes
                 self.div.selectAll('.node')
                   .style('pointer-events', 'none');
