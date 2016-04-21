@@ -6,11 +6,7 @@ module.exports = (function() {
     function TreeMap() {
         this.bigChart = null;
 
-        this.width = window.innerWidth - 200;
-        this.headerHeight = parseInt(d3.select('#navbar').style('height'));
-        this.padding = parseInt(d3.select('#background').style('padding-top'));
-        this.padding += parseInt(d3.select('#background').style('padding-bottom'));
-        this.height = window.innerHeight - this.headerHeight - this.padding;
+        calculateChartSize.call(this);
 
         this.treemap = d3.layout.treemap()
             .size([this.width, this.height])
@@ -54,11 +50,8 @@ module.exports = (function() {
 
 
     TreeMap.prototype.redraw = function() {
-        this.width = window.innerWidth - 200;
-        this.headerHeight = parseInt(d3.select('#navbar').style('height'));
-        this.padding = parseInt(d3.select('#background').style('padding-top'));
-        this.padding += parseInt(d3.select('#background').style('padding-bottom'));
-        this.height = window.innerHeight - this.headerHeight - this.padding;
+
+        calculateChartSize.call(this);
 
         d3.select('#chart')
             .style('width', this.width + 'px')
@@ -221,6 +214,20 @@ module.exports = (function() {
             .style('margin-top', function(d) {
                 return d.dy * (1 - (d.percentFull)) + 'px';
             });
+    };
+
+    // Determines the size of the chart based on window size and css stylng.
+    var calculateChartSize = function() {
+        var background = d3.select('#background');
+
+        this.horizontalPadding = parseInt(background.style('padding-left'));
+        this.horizontalPadding += parseInt(background.style('padding-right'));
+        this.width = window.innerWidth - this.horizontalPadding;
+
+        this.headerHeight = parseInt(d3.select('#navbar').style('height'));
+        this.verticalPadding = parseInt(d3.select('#background').style('padding-top'));
+        this.verticalPadding += parseInt(d3.select('#background').style('padding-bottom'));
+        this.height = window.innerHeight - this.headerHeight - this.verticalPadding ;
     };
 
 
