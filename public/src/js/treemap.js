@@ -4,7 +4,7 @@ module.exports = (function() {
     var BigChart = require('./treemap-bigchart');
 
     function TreeMap() {
-      this.bigChart = null;
+        this.bigChart = null;
 
         this.width = window.innerWidth - 200;
         this.headerHeight = parseInt(d3.select('#navbar').style('height'));
@@ -96,57 +96,61 @@ module.exports = (function() {
                 return 'node';
             })
             .on('mouseover', function(d) {
-                var e = d3.select(this);
-                e.style('width', function(d) {
-                    return d.dxLarge + 'px';
-                });
-                e.style('left', function(d) {
-                    return (d.x - (d.dxLarge - d.dx) / 2) + 'px';
-                });
-                e.style('height', function(d) {
-                    return d.dyLarge + 'px';
-                });
-                e.style('top', function(d) {
-                    return (d.y - (d.dyLarge - d.dy) / 2) + 'px';
-                });
-
-                e.classed('node-shadow', true);
-
-                e.select('.lake-text').style('font-size', function(d) {
-                    return fontSize(d.dxLarge, d.dyLarge);
-                });
-
-                e.select('.internal-graph')
-                    .style('height', function(d) {
-                        return d.dyLarge * (d.percentFull) + 'px';
-                    })
-                    .style('margin-top', function(d) {
-                        return d.dyLarge * (1 - (d.percentFull)) + 1 + 'px';
+                if (window.matchMedia('(min-width: 768px)').matches) {
+                    var e = d3.select(this);
+                    e.style('width', function(d) {
+                        return d.dxLarge + 'px';
                     });
+                    e.style('left', function(d) {
+                        return (d.x - (d.dxLarge - d.dx) / 2) + 'px';
+                    });
+                    e.style('height', function(d) {
+                        return d.dyLarge + 'px';
+                    });
+                    e.style('top', function(d) {
+                        return (d.y - (d.dyLarge - d.dy) / 2) + 'px';
+                    });
+
+                    e.classed('node-shadow', true);
+
+                    e.select('.lake-text').style('font-size', function(d) {
+                        return fontSize(d.dxLarge, d.dyLarge);
+                    });
+
+                    e.select('.internal-graph')
+                        .style('height', function(d) {
+                            return d.dyLarge * (d.percentFull) + 'px';
+                        })
+                        .style('margin-top', function(d) {
+                            return d.dyLarge * (1 - (d.percentFull)) + 1 + 'px';
+                        });
+                };
             })
             .on('mouseout', function(d) {
-                var e = d3.select(this);
-                e.call(position);
-                e.classed('node-shadow', false);
-                e.select('.lake-text').style('font-size', function(d) {
-                    return fontSize(d.dx, d.dy);
-                });
-                e.select('.internal-graph')
-                    .style('height', function(d) {
-                        return d.dy * (d.percentFull) + 'px';
-                    })
-                    .style('margin-top', function(d) {
-                        return d.dy * (1 - (d.percentFull)) + 1 + 'px';
+                if (window.matchMedia('(min-width: 768px)').matches) {
+                    var e = d3.select(this);
+                    e.call(position);
+                    e.classed('node-shadow', false);
+                    e.select('.lake-text').style('font-size', function(d) {
+                        return fontSize(d.dx, d.dy);
                     });
+                    e.select('.internal-graph')
+                        .style('height', function(d) {
+                            return d.dy * (d.percentFull) + 'px';
+                        })
+                        .style('margin-top', function(d) {
+                            return d.dy * (1 - (d.percentFull)) + 1 + 'px';
+                        });
+                };
             })
             .on('click', function(d) {
-              // Set location with hash value. This is so we can detect
-              // the back button from BigChart if the user does not use
-              // the 'Close' text.
-              window.location.href = ("#historychart");
+                // Set location with hash value. This is so we can detect
+                // the back button from BigChart if the user does not use
+                // the 'Close' text.
+                window.location.href = ("#historychart");
                 // Disable clicking any other nodes
                 self.div.selectAll('.node')
-                  .style('pointer-events', 'none');
+                    .style('pointer-events', 'none');
 
                 self.bigChart = new BigChart(self.div, d.name, d.capacity);
                 self.bigChart.loadData(
@@ -154,15 +158,15 @@ module.exports = (function() {
                     function() {
                         // Hide all nodes in the treemap chart
                         self.div.selectAll('.node')
-                          .classed('visible', false)
-                          .classed('hidden', true);
+                            .classed('visible', false)
+                            .classed('hidden', true);
                     },
                     // Close callback
                     function() {
                         self.div.selectAll('.node')
-                          .classed('hidden', false)
-                          .classed('visible', true)
-                          .style('pointer-events', 'auto');
+                            .classed('hidden', false)
+                            .classed('visible', true)
+                            .style('pointer-events', 'auto');
                         self.bigChart = null;
                     });
             })
