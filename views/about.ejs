@@ -3,6 +3,10 @@
 
 <head>
     <% include partials/head.ejs %>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" />
+        <!--[if lt IE 9]>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.ie.min.css" />
+<![endif]-->
 </head>
 
 <body>
@@ -56,6 +60,7 @@
                 </div>
             </div>
         </div>
+        <% include partials/forkme.ejs %>
 </body>
 
 </html>
