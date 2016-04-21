@@ -95,3 +95,14 @@ div .node:hover {
 #about {
   background: white;
 }
+.dataPointCircle {
+  cursor: none;
+  fill: #316E7F;
+  stroke: black;
+  stroke-width: 1;
+  opacity: 0.7;
+}
+.dataPointLabel {
+  border: 1px solid black;
+  box-shadow: 0px 0px 29px 5px rgba(0, 0, 0, 0.31);
+}

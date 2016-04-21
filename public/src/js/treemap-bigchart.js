@@ -1,5 +1,5 @@
 module.exports = (function() {
-  'use strict';
+    'use strict';
     // var d3 = require('d3');
 
     function BigChart(rootElement, name, capacity) {
@@ -23,18 +23,18 @@ module.exports = (function() {
     BigChart.prototype.createChart = function() {
         var self = this;
         // Check the number of arguments are ok. Either zero or two.
-        if (arguments.length !== 0 && arguments.length !== 2)
-        {
-          throw new Error("Invalid number of arguments. Expected zero or two.");
+        if (arguments.length !== 0 && arguments.length !== 2) {
+            throw new Error("Invalid number of arguments. Expected zero or two.");
         }
 
-        var width = 0, height = 0;
+        var width = 0,
+            height = 0;
         if (arguments.length === 0) {
-          width = this.rootElement.style('width');
-          height = this.rootElement.style('height');
+            width = this.rootElement.style('width');
+            height = this.rootElement.style('height');
         } else {
-          width = arguments[0];
-          height = arguments[1];
+            width = arguments[0];
+            height = arguments[1];
         }
 
         this.rootElement.append('div')
@@ -104,6 +104,70 @@ module.exports = (function() {
             .datum(this.data)
             .attr('class', 'lake-levels-area')
             .attr('d', area);
+            
+        // Append a group for each data point.
+        var dataPoint = svg.append('g')
+            .selectAll('.dataPoint')
+            .data(this.data)
+            .enter()
+            .append('g')
+            .attr('class', 'dataPoint');
+
+        // Draw a circle for each data point that is shown when the
+        // mouse hovers over it.
+        dataPoint.append('circle')
+            .attr('class', 'dataPointCircle')
+            .attr('r', 5)
+            .attr('cx', function(d) {
+                return xScale(new Date(d.date));
+            })
+            .attr('cy', function(d) {
+                return yScale(d.level / self.capacity * 100);
+            })
+            .attr('visibility', 'hidden')
+            .attr('pointer-events', 'all')
+            .on('mouseover', function() {
+                var e = d3.select(this);
+                e.style('visibility', 'visible');
+
+                d3.select(this.parentNode)
+                .select('.dataPointLabel')
+                    .style('visibility', 'visible');
+            })
+            .on('mouseout', function() {
+                var e = d3.select(this);
+                e.style('visibility', 'hidden');
+
+                d3.select(this.parentNode)
+                .select('.dataPointLabel')
+                  .style('visibility', 'hidden');
+            });
+
+        // Label for the data point. Chooses left/middle/right allign
+        // dependent on where on the x-axis the point is situated.
+        dataPoint.append('text')
+            .attr('class', 'dataPointLabel')
+            .attr('visibility', 'hidden')
+            .text(function(d) {
+              var format = d3.time.format('%e %B');
+              var date = format(new Date(d.date));
+              var level = Math.round(d.level / self.capacity * 1000) / 10;
+              return date + ' ' + level + '%';
+            })
+            .attr('x', function(d) {
+                return xScale(new Date(d.date));
+            })
+            .attr('y', function(d) {
+                return yScale(d.level / self.capacity * 100) - 12;
+            })
+            .style('text-anchor', function(d) {
+              var range = xScale.range()[1];
+              var xPosition = xScale(new Date(d.date));
+              var xPositionRatio = xPosition / range;
+              if (xPositionRatio < 0.2) return 'start';
+              if (xPositionRatio < 0.8) return 'middle';
+              return 'end';
+            });
 
         svg.append('g')
             .call(xAxis)
@@ -132,18 +196,18 @@ module.exports = (function() {
             .style('cursor', 'pointer')
             .text('Close')
             .on('click', function(d) {
-              closeChart.call(self);
-                });
+                closeChart.call(self);
+            });
 
         window.onhashchange = closeChart.bind(this);
 
     };
 
     function closeChart() {
-      /* jshint -W040 */
-            this.rootElement.select('#bigchart')
-                    .remove();
-                this.callbackClose();
+        /* jshint -W040 */
+        this.rootElement.select('#bigchart')
+            .remove();
+        this.callbackClose();
     }
 
     BigChart.prototype.removeChart = function() {
@@ -152,14 +216,14 @@ module.exports = (function() {
     };
 
     BigChart.prototype.redraw = function(targetWidth, targetHeight) {
-      // Redraws the chart by removing it and creating a new one.
-      // Note that we cannot just read the width and height sytle properties
-      // as they are changing due to CSS transforms. We must pass the final
-      // values to the drawing function manually. Unfortunately we don't get
-      // a nice animation this way....
+        // Redraws the chart by removing it and creating a new one.
+        // Note that we cannot just read the width and height sytle properties
+        // as they are changing due to CSS transforms. We must pass the final
+        // values to the drawing function manually. Unfortunately we don't get
+        // a nice animation this way....
 
-      this.removeChart();
-      this.createChart(targetWidth, targetHeight);
+        this.removeChart();
+        this.createChart(targetWidth, targetHeight);
     };
 
     return BigChart;
