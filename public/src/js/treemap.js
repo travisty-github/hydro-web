@@ -124,7 +124,7 @@ module.exports = (function() {
                         .style('margin-top', function(d) {
                             return d.dyLarge * (1 - (d.percentFull)) + 1 + 'px';
                         });
-                };
+                }
             })
             .on('mouseout', function(d) {
                 if (window.matchMedia('(min-width: 768px)').matches) {
@@ -141,7 +141,7 @@ module.exports = (function() {
                         .style('margin-top', function(d) {
                             return d.dy * (1 - (d.percentFull)) + 1 + 'px';
                         });
-                };
+                }
             })
             .on('click', function(d) {
                 // Set location with hash value. This is so we can detect
