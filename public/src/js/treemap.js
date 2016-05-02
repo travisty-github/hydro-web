@@ -32,7 +32,18 @@ module.exports = (function() {
         this.data = [];
         var self = this;
         d3.json(path, function(err, d) {
+            // TODO Give user error message.
             if (err) console.log(err);
+
+            // Remove loading text and associated floater div.
+            d3.select('#floater')
+              .style('display', 'none');
+            d3.select('#loading')
+              .style('display', 'none');
+
+            // Show chart
+            d3.select('#chart')
+              .style('display', 'block');
 
             // Do not need overall sytem storage level
             self.data = d.filter(function(d) {
