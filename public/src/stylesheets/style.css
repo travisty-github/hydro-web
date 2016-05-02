@@ -55,8 +55,6 @@ div .node:hover {
 #background {
   background-color: #E9E9E9;
   padding: 50px 50px 50px 50px;
-  -webkit-box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
   box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
   width: 100%;
   margin-top: -20px;
