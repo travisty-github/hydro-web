@@ -40,7 +40,6 @@ module.exports = (function() {
               .style('display', 'none');
             d3.select('#loading')
               .style('display', 'none');
-
             // Show chart
             d3.select('#chart')
               .style('display', 'block');
