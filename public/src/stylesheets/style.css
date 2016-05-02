@@ -1,7 +1,11 @@
+html {
+  height: 100%
+}
 body {
   margin: 0px;
   font-family: sans-serif;
   position: relative;
+  height: 100%;
 }
 
 .node {
@@ -23,6 +27,7 @@ body {
   margin-right: auto;
   transition: 0.5s;
   transition-timing-function: ease-out;
+  display: none;
 }
 .shadow {
   box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.12);
@@ -58,6 +63,23 @@ div .node:hover {
   box-shadow: inset 0px 8px 70px -25px rgba(0, 0, 0, 0.75);
   width: 100%;
   margin-top: -20px;
+  /* Bit of an ugly hack to set initial background to full screen height
+  while doing initial data load.*/
+  height: calc(100% - 52px);
+}
+
+/* Empty div to push #loading down 50% */
+#floater {
+  float: left;
+  height: 50%;
+  width: 100%;
+  margin-bottom: -50px;
+}
+/* Show loading text while getting initial data load */
+#loading {
+  height: 100px;
+  clear: both;
+  text-align: center;
 }
 
 @media screen and (max-width: 768px) {
